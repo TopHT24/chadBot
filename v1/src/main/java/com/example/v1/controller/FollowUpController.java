@@ -3,7 +3,8 @@ package com.example.v1.controller;
 import com.example.v1.dto.request.FollowUpReplyRequest;
 import com.example.v1.dto.response.FollowUpResponse;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import com.example.v1.service.FollowUpService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -21,17 +21,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/follow-ups")
+@RequiredArgsConstructor
 public class FollowUpController {
+
+	private final FollowUpService followUpService;
 
 	/** Follow-up questions asked about one answer. */
 	@GetMapping
 	public List<FollowUpResponse> list(@RequestParam Long studentAnswerId) {
-		throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "Not implemented yet");
+		return followUpService.findByStudentAnswer(studentAnswerId);
 	}
 
 	/** The student replies to a follow-up question. */
 	@PostMapping("/{id}/reply")
 	public FollowUpResponse reply(@PathVariable Long id, @Valid @RequestBody FollowUpReplyRequest request) {
-		throw new ResponseStatusException(HttpStatus.NOT_IMPLEMENTED, "Not implemented yet");
+		return followUpService.reply(id, request);
 	}
 }

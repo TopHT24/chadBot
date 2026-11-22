@@ -1,0 +1,60 @@
+### Try the student flow by hand. Start the app first: ./mvnw spring-boot:run
+### IntelliJ, or VS Code with the "REST Client" extension: click "Send Request" on each block, top to bottom.
+### Data is in memory: restarting the app clears it and ids start again at 1.
+
+### 1. Upload a file from the computer (notes.txt is next to this file)
+POST http://localhost:8080/api/materials
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="notes.txt"
+Content-Type: text/plain
+
+< ./notes.txt
+--boundary
+Content-Disposition: form-data; name="userId"
+
+1
+--boundary--
+
+### 2. ...or paste text instead
+POST http://localhost:8080/api/materials/text
+Content-Type: application/json
+
+{"userId": 1, "title": "Water cycle", "content": "Water evaporates from oceans when the sun heats it. The vapour cools and condenses into clouds, then falls as rain."}
+
+### 3. My materials
+GET http://localhost:8080/api/materials?userId=1
+
+### 4. Generate a test from material 1
+POST http://localhost:8080/api/exams
+Content-Type: application/json
+
+{"userId": 1, "sourceMaterialIds": [1], "questionCount": 3}
+
+### 5. My tests
+GET http://localhost:8080/api/exams?userId=1
+
+### 6. Start test 1 (copy questionIds from the response)
+POST http://localhost:8080/api/exams/1/attempts?userId=1
+
+### 7. Answer question 1, with an explanation (at least 15 words)
+PUT http://localhost:8080/api/attempts/1/answers
+Content-Type: application/json
+
+{"questionId": 1, "answer": "True", "explanation": "Chlorophyll in the leaves absorbs sunlight, and that light energy is what powers photosynthesis in the plant."}
+
+### 8. Answer question 2
+PUT http://localhost:8080/api/attempts/1/answers
+Content-Type: application/json
+
+{"questionId": 2, "answer": "True", "explanation": "The oxygen comes from water molecules that are split apart, and the plant releases it into the air."}
+
+### 9. Submit: grades the answers and explanations
+POST http://localhost:8080/api/attempts/1/submit
+
+### 10. See the feedback again later
+GET http://localhost:8080/api/attempts/1/result
+
+### 11. My history
+GET http://localhost:8080/api/attempts?userId=1

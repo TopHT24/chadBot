@@ -3,7 +3,7 @@ package com.example.v1.dto.response;
 import java.util.List;
 
 /**
- * What a student sees after grading: per-question scores and feedback, without
+ * What the student sees after grading: per-question scores and feedback, without
  * internal fields such as LLM confidence or rubric points. The service assembles it.
  */
 public record AttemptResultResponse(AttemptResponse attempt, List<QuestionResult> results) {
@@ -13,8 +13,11 @@ public record AttemptResultResponse(AttemptResponse attempt, List<QuestionResult
 			String stem,
 			String yourAnswer,
 			String yourExplanation,
-			boolean answerCorrect,
+			/* null for OPEN questions, which have no single right answer */
+			Boolean answerCorrect,
 			String correctAnswer,
+			/* what a good explanation looks like (the rubric's reference explanation) */
+			String modelExplanation,
 			double answerPointsEarned,
 			double explanationPointsEarned,
 			double maxPoints,
