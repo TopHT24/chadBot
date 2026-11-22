@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Course material that questions are generated from.
+ * A file or text the student uploaded; tests are generated from it.
  */
 @Getter
 @Setter
@@ -25,16 +25,14 @@ public class SourceMaterial implements Identifiable {
 	@EqualsAndHashCode.Include
 	private Long id;
 
-	/** FK -> Course */
-	private Long courseId;
+	/** FK -> User (owner) */
+	private Long userId;
 	private String title;
 	private SourceType type;
 	/** Extracted plain text sent to the LLM */
 	private String content;
 	/** Path/URL of the original file, if any */
 	private String fileRef;
-	/** FK -> User */
-	private Long uploadedBy;
 	@Builder.Default
 	private Instant createdAt = Instant.now();
 }

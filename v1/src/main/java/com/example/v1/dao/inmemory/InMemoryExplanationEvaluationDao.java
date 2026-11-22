@@ -21,9 +21,4 @@ public class InMemoryExplanationEvaluationDao extends InMemoryCrudDao<Explanatio
 	public List<ExplanationEvaluation> findByStudentAnswerId(Long studentAnswerId) {
 		return findWhere(e -> Objects.equals(e.getStudentAnswerId(), studentAnswerId));
 	}
-
-	@Override
-	public List<ExplanationEvaluation> findNeedingTeacherReview() {
-		return findWhere(ExplanationEvaluation::isNeedsTeacherReview);
-	}
 }

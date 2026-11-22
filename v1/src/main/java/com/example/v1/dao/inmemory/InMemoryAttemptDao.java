@@ -16,17 +16,17 @@ public class InMemoryAttemptDao extends InMemoryCrudDao<Attempt> implements Atte
 	}
 
 	@Override
-	public List<Attempt> findByStudentId(Long studentId) {
-		return findWhere(a -> Objects.equals(a.getStudentId(), studentId));
+	public List<Attempt> findByUserId(Long userId) {
+		return findWhere(a -> Objects.equals(a.getUserId(), userId));
 	}
 
 	@Override
-	public List<Attempt> findByExamIdAndStudentId(Long examId, Long studentId) {
-		return findWhere(a -> Objects.equals(a.getExamId(), examId) && Objects.equals(a.getStudentId(), studentId));
+	public List<Attempt> findByExamIdAndUserId(Long examId, Long userId) {
+		return findWhere(a -> Objects.equals(a.getExamId(), examId) && Objects.equals(a.getUserId(), userId));
 	}
 
 	@Override
-	public long countByExamIdAndStudentId(Long examId, Long studentId) {
-		return findByExamIdAndStudentId(examId, studentId).size();
+	public long countByExamIdAndUserId(Long examId, Long userId) {
+		return findByExamIdAndUserId(examId, userId).size();
 	}
 }

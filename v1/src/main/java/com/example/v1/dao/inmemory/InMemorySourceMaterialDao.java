@@ -11,7 +11,7 @@ import java.util.Objects;
 public class InMemorySourceMaterialDao extends InMemoryCrudDao<SourceMaterial> implements SourceMaterialDao {
 
 	@Override
-	public List<SourceMaterial> findByCourseId(Long courseId) {
-		return findWhere(s -> Objects.equals(s.getCourseId(), courseId));
+	public List<SourceMaterial> findByUserId(Long userId) {
+		return findWhere(s -> Objects.equals(s.getUserId(), userId));
 	}
 }

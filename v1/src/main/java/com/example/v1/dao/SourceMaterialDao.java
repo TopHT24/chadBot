@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface SourceMaterialDao extends CrudDao<SourceMaterial, Long> {
 
-	List<SourceMaterial> findByCourseId(Long courseId);
+	List<SourceMaterial> findByUserId(Long userId);
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * The LLM's grading of an explanation against the rubric. Never overwritten: teachers add a GradeOverride.
+ * The LLM's grading of an explanation against the rubric. Re-grading adds a new row instead of overwriting.
  */
 @Getter
 @Setter
@@ -40,8 +40,6 @@ public class ExplanationEvaluation implements Identifiable {
 	private String feedbackToStudent;
 	/** 0..1, grader's self-reported confidence */
 	private double confidence;
-	@Builder.Default
-	private boolean needsTeacherReview = false;
 	/** FK -> LlmCall */
 	private Long llmCallId;
 	@Builder.Default

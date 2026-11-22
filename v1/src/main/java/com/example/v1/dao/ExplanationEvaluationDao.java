@@ -11,6 +11,4 @@ public interface ExplanationEvaluationDao extends CrudDao<ExplanationEvaluation,
 	Optional<ExplanationEvaluation> findLatestByStudentAnswerId(Long studentAnswerId);
 
 	List<ExplanationEvaluation> findByStudentAnswerId(Long studentAnswerId);
-
-	List<ExplanationEvaluation> findNeedingTeacherReview();
 }

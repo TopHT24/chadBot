@@ -7,7 +7,7 @@ import java.util.List;
  * Maps to an ExplanationEvaluation (and possibly a FollowUp).
  *
  * @param consistentWithAnswer does the reasoning actually support the answer the student chose?
- * @param confidence           0..1; low values send the evaluation to teacher review
+ * @param confidence           0..1; low values can be flagged as uncertain to the student
  * @param followUpQuestion     a probing question when the explanation is vague, otherwise null
  */
 public record ExplanationGradingResult(

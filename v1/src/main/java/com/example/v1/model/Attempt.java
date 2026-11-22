@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * One student's sitting of an exam.
+ * One sitting of an exam. A student can retake an exam, giving several attempts.
  */
 @Getter
 @Setter
@@ -28,7 +28,7 @@ public class Attempt implements Identifiable {
 	/** FK -> Exam */
 	private Long examId;
 	/** FK -> User */
-	private Long studentId;
+	private Long userId;
 	private int attemptNumber;
 	@Builder.Default
 	private AttemptStatus status = AttemptStatus.IN_PROGRESS;

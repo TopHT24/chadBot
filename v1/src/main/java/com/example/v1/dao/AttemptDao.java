@@ -8,9 +8,9 @@ public interface AttemptDao extends CrudDao<Attempt, Long> {
 
 	List<Attempt> findByExamId(Long examId);
 
-	List<Attempt> findByStudentId(Long studentId);
+	List<Attempt> findByUserId(Long userId);
 
-	List<Attempt> findByExamIdAndStudentId(Long examId, Long studentId);
+	List<Attempt> findByExamIdAndUserId(Long examId, Long userId);
 
-	long countByExamIdAndStudentId(Long examId, Long studentId);
+	long countByExamIdAndUserId(Long examId, Long userId);
 }

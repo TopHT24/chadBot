@@ -1,15 +1,13 @@
 package com.example.v1.dto.request;
 
-import com.example.v1.model.enums.SourceType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * Pasted text. Uploaded files come in as multipart instead (see MaterialController).
+ */
 public record CreateSourceMaterialRequest(
-		@NotNull Long courseId,
+		@NotNull Long userId,
 		@NotBlank String title,
-		@NotNull SourceType type,
-		/* Plain text for TEXT; extracted text for PDF/URL once upload handling exists. */
-		@NotBlank String content,
-		String fileRef,
-		@NotNull Long uploadedBy) {
+		@NotBlank String content) {
 }

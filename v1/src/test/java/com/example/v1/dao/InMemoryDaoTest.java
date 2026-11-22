@@ -1,14 +1,14 @@
 package com.example.v1.dao;
 
+import com.example.v1.dao.inmemory.InMemoryExamDao;
 import com.example.v1.dao.inmemory.InMemoryExamQuestionDao;
-import com.example.v1.dao.inmemory.InMemoryQuestionDao;
 import com.example.v1.dao.inmemory.InMemoryUserDao;
+import com.example.v1.model.Exam;
 import com.example.v1.model.ExamQuestion;
 import com.example.v1.model.Question;
 import com.example.v1.model.User;
-import com.example.v1.model.enums.QuestionStatus;
+import com.example.v1.model.enums.ExamStatus;
 import com.example.v1.model.enums.QuestionType;
-import com.example.v1.model.enums.Role;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,33 +16,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 class InMemoryDaoTest {
 
 	@Test
-	void saveAssignsIdsAndFindsByCustomQueries() {
+	void saveAssignsIdsAndFindsByEmail() {
 		UserDao users = new InMemoryUserDao();
-		User saved = users.save(User.builder().fullName("Ada").email("ada@example.com").role(Role.STUDENT).build());
+		User saved = users.save(User.builder().fullName("Ada").email("ada@example.com").build());
 
 		assertThat(saved.getId()).isEqualTo(1L);
 		assertThat(saved.getCreatedAt()).isNotNull();
 		assertThat(users.findByEmail("ADA@example.com")).contains(saved);
-		assertThat(users.findByRole(Role.TEACHER)).isEmpty();
 	}
 
 	@Test
 	void builderAndNoArgsConstructorApplyDefaults() {
-		Question built = Question.builder().courseId(1L).type(QuestionType.MULTIPLE_CHOICE).stem("?").build();
-		Question empty = new Question();
+		Question built = Question.builder().type(QuestionType.MULTIPLE_CHOICE).stem("?").build();
+		Exam empty = new Exam();
 
-		assertThat(built.getStatus()).isEqualTo(QuestionStatus.DRAFT);
 		assertThat(built.getOptions()).isEmpty();
-		assertThat(empty.getStatus()).isEqualTo(QuestionStatus.DRAFT);
-		assertThat(empty.isRequiresExplanation()).isTrue();
+		assertThat(built.getCreatedAt()).isNotNull();
+		assertThat(empty.getStatus()).isEqualTo(ExamStatus.GENERATING);
+		assertThat(empty.getSourceMaterialIds()).isEmpty();
 	}
 
 	@Test
-	void filtersByStatusAndOrdersExamQuestionsByPosition() {
-		QuestionDao questions = new InMemoryQuestionDao();
-		questions.save(Question.builder().courseId(1L).build());
-		questions.save(Question.builder().courseId(1L).status(QuestionStatus.APPROVED).build());
-		assertThat(questions.findByCourseIdAndStatus(1L, QuestionStatus.APPROVED)).hasSize(1);
+	void findsExamsByOwnerAndOrdersExamQuestionsByPosition() {
+		ExamDao exams = new InMemoryExamDao();
+		exams.save(Exam.builder().userId(1L).title("Mine").build());
+		exams.save(Exam.builder().userId(2L).title("Someone else's").build());
+		assertThat(exams.findByUserId(1L)).extracting(Exam::getTitle).containsExactly("Mine");
 
 		ExamQuestionDao examQuestions = new InMemoryExamQuestionDao();
 		examQuestions.save(ExamQuestion.builder().examId(1L).questionId(10L).position(2).build());

@@ -1,6 +1,5 @@
 package com.example.v1.model;
 
-import com.example.v1.model.enums.Role;
 import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * A person using the app: student, teacher or admin.
+ * A student using the app.
  */
 @Getter
 @Setter
@@ -27,7 +26,6 @@ public class User implements Identifiable {
 
 	private String fullName;
 	private String email;
-	private Role role;
 	@Builder.Default
 	private Instant createdAt = Instant.now();
 }

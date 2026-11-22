@@ -8,7 +8,7 @@ import java.time.Instant;
 /**
  * Leaves out the full content (can be large); returns a short preview instead.
  */
-public record SourceMaterialResponse(Long id, Long courseId, String title, SourceType type,
+public record SourceMaterialResponse(Long id, Long userId, String title, SourceType type,
 		String preview, int contentLength, Instant createdAt) {
 
 	private static final int PREVIEW_LENGTH = 200;
@@ -16,7 +16,7 @@ public record SourceMaterialResponse(Long id, Long courseId, String title, Sourc
 	public static SourceMaterialResponse from(SourceMaterial s) {
 		String content = s.getContent() == null ? "" : s.getContent();
 		String preview = content.length() <= PREVIEW_LENGTH ? content : content.substring(0, PREVIEW_LENGTH) + "…";
-		return new SourceMaterialResponse(s.getId(), s.getCourseId(), s.getTitle(), s.getType(),
+		return new SourceMaterialResponse(s.getId(), s.getUserId(), s.getTitle(), s.getType(),
 				preview, content.length(), s.getCreatedAt());
 	}
 }
